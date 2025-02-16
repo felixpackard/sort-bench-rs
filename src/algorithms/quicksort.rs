@@ -8,7 +8,7 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     let mut current = v;
 
     loop {
-        if current.len() < 10 {
+        if current.len() < 15 {
             insertion_sort(current);
             match stack.pop() {
                 Some(slice) => current = slice,
