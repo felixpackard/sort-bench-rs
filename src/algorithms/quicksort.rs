@@ -1,4 +1,4 @@
-pub fn sort<T: PartialOrd + Copy>(v: &mut [T]) {
+pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     if v.len() <= 1 {
         return;
     }
@@ -39,7 +39,7 @@ pub fn sort<T: PartialOrd + Copy>(v: &mut [T]) {
     }
 }
 
-fn partition<T: PartialOrd + Copy>(v: &mut [T]) -> usize {
+fn partition<T: Ord + Copy>(v: &mut [T]) -> usize {
     let right = v.len() - 1;
     let mut i = 0;
     for j in 0..right {

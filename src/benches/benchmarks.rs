@@ -27,6 +27,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         };
     }
 
+    bench_all!(std);
     bench_all!(quicksort);
 }
 
