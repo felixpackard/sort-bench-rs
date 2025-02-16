@@ -37,7 +37,19 @@ pub fn sort<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) {
 }
 
 fn pivot<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> T {
-    v[0]
+    let left = 0;
+    let right = v.len() - 1;
+    let mid = (left + right) / 2;
+    if v[right] < v[left] {
+        v.swap(left, right);
+    }
+    if v[mid] < v[left] {
+        v.swap(left, mid);
+    }
+    if v[right] < v[mid] {
+        v.swap(mid, right);
+    }
+    v[mid]
 }
 
 /// Hoare's partition scheme
