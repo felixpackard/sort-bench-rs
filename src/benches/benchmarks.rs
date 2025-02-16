@@ -28,6 +28,7 @@ fn criterion_benchmark(c: &mut Criterion) {
 
         if i <= 10_000 {
             bench!(selection_sort, i);
+            bench!(bubble_sort, i);
         }
     }
 
