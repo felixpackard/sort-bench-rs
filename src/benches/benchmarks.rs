@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
+use criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 use rand::{Rng, SeedableRng};
 
 fn criterion_benchmark(c: &mut Criterion) {
@@ -6,7 +6,7 @@ fn criterion_benchmark(c: &mut Criterion) {
 
     macro_rules! bench {
         ($algorithm:ident, $size:ident) => {
-            group.bench_function(format!("{} {}", stringify!($algorithm), $size), |b| {
+            group.bench_function(BenchmarkId::new(stringify!($algorithm), $size), |b| {
                 let rng = rand::rngs::SmallRng::seed_from_u64(0);
                 b.iter_batched_ref(
                     || -> Vec<i32> {
@@ -26,6 +26,8 @@ fn criterion_benchmark(c: &mut Criterion) {
         bench!(std, i);
         bench!(quicksort, i);
     }
+
+    group.finish();
 }
 
 criterion_group!(benches, criterion_benchmark);
