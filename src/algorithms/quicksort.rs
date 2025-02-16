@@ -8,7 +8,13 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     let mut current = v;
 
     loop {
-        if current.len() > 1 {
+        if current.len() < 10 {
+            insertion_sort(current);
+            match stack.pop() {
+                Some(slice) => current = slice,
+                None => break,
+            };
+        } else if current.len() > 1 {
             let p = partition(current);
             let (left, right) = current.split_at_mut(p);
 
@@ -26,15 +32,6 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
             current = slice;
         } else {
             break;
-        }
-    }
-
-    while let Some(v) = stack.pop() {
-        if v.len() > 1 {
-            let p = partition(v);
-            let (left, right) = v.split_at_mut(p);
-            stack.push(left);
-            stack.push(&mut right[1..]);
         }
     }
 }
@@ -62,6 +59,20 @@ fn partition<T: Ord + Copy>(v: &mut [T]) -> usize {
 
         left += 1;
         right -= 1;
+    }
+}
+
+fn insertion_sort<T: Ord + Copy>(v: &mut [T]) {
+    for i in 1..v.len() {
+        let mut j = i;
+        let key = v[i];
+
+        while j > 0 && key < v[j - 1] {
+            v[j] = v[j - 1];
+            j -= 1;
+        }
+
+        v[j] = key;
     }
 }
 
