@@ -25,6 +25,10 @@ fn criterion_benchmark(c: &mut Criterion) {
     for i in [10, 10_000, 100_000, 1_000_000] {
         bench!(std, i);
         bench!(quicksort, i);
+
+        if i <= 10_000 {
+            bench!(selection_sort, i);
+        }
     }
 
     group.finish();
