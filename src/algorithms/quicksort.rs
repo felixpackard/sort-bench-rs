@@ -1,4 +1,4 @@
-pub fn sort<T: Ord + Copy>(v: &mut [T]) {
+pub fn sort<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) {
     if v.len() <= 1 {
         return;
     }
@@ -16,10 +16,10 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
             };
         } else if current.len() > 1 {
             let p = partition(current);
-            let (left, right) = current.split_at_mut(p);
+            let (left, right) = current.split_at_mut(p + 1);
 
             // exclude the pivot from the right partition
-            let right = &mut right[1..];
+            // let right = &mut right[1..];
 
             if left.len() < right.len() {
                 stack.push(right);
@@ -36,29 +36,32 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     }
 }
 
+fn pivot<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> T {
+    v[0]
+}
+
 /// Hoare's partition scheme
-fn partition<T: Ord + Copy>(v: &mut [T]) -> usize {
-    let pivot = v[0];
-    let mut left = 0;
-    let mut right = v.len() - 1;
+fn partition<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> usize {
+    let p = pivot(v);
+    let mut left: isize = -1;
+    let mut right: isize = v.len() as isize;
 
     loop {
-        while v[left] < pivot {
+        while {
             left += 1;
-        }
+            v[left as usize] < p
+        } {}
 
-        while v[right] > pivot {
+        while {
             right -= 1;
-        }
+            v[right as usize] > p
+        } {}
 
         if left >= right {
-            return right;
+            return right as usize;
         }
 
-        v.swap(left, right);
-
-        left += 1;
-        right -= 1;
+        v.swap(left as usize, right as usize);
     }
 }
 
@@ -78,10 +81,9 @@ fn insertion_sort<T: Ord + Copy>(v: &mut [T]) {
 
 #[cfg(test)]
 mod tests {
-
     #[test]
     fn test_sort() {
-        let mut data = crate::utils::rand_data(1_000_000);
+        let mut data = crate::utils::rand_data(10_000);
         super::sort(&mut data);
         crate::utils::assert_sorted(&data);
     }

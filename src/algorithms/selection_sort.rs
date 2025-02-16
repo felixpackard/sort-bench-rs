@@ -13,3 +13,13 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
         v.swap(left, idx);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_sort() {
+        let mut data = crate::utils::rand_data(10_000);
+        super::sort(&mut data);
+        crate::utils::assert_sorted(&data);
+    }
+}
