@@ -39,17 +39,30 @@ pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     }
 }
 
+/// Hoare's partition scheme
 fn partition<T: Ord + Copy>(v: &mut [T]) -> usize {
-    let right = v.len() - 1;
-    let mut i = 0;
-    for j in 0..right {
-        if v[j] <= v[right] {
-            v.swap(j, i);
-            i += 1;
+    let pivot = v[0];
+    let mut left = 0;
+    let mut right = v.len() - 1;
+
+    loop {
+        while v[left] < pivot {
+            left += 1;
         }
+
+        while v[right] > pivot {
+            right -= 1;
+        }
+
+        if left >= right {
+            return right;
+        }
+
+        v.swap(left, right);
+
+        left += 1;
+        right -= 1;
     }
-    v.swap(i, right);
-    i
 }
 
 #[cfg(test)]
