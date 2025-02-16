@@ -1,0 +1,16 @@
+[package]
+name = "sorting-algorithms"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+criterion = "0.5.1"
+rand = "0.9.0"
+
+[algorithms]
+path = "src/algorithms"
+
+[[bench]]
+name = "benchmarks"
+path = "src/benches/benchmarks.rs"
+harness = false
