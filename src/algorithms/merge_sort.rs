@@ -25,29 +25,28 @@ pub fn sort<T: Ord + Copy + std::fmt::Display + std::fmt::Debug>(v: &mut [T]) {
 }
 
 fn merge<T: Ord + Copy + std::fmt::Display>(left_half: &[T], right_half: &[T], v: &mut [T]) {
-    let (mut i, mut j, mut k) = (0, 0, 0);
+    let mut left_iter = left_half.iter().peekable();
+    let mut right_iter = right_half.iter().peekable();
+    let mut output = v.iter_mut();
 
-    while i < left_half.len() && j < right_half.len() {
-        if left_half[i] < right_half[j] {
-            v[k] = left_half[i];
-            i += 1;
+    while let (Some(&left), Some(&right)) = (left_iter.peek(), right_iter.peek()) {
+        let next = if left <= right {
+            *left_iter.next().unwrap()
         } else {
-            v[k] = right_half[j];
-            j += 1;
-        }
-        k += 1;
+            *right_iter.next().unwrap()
+        };
+        *output.next().unwrap() = next;
     }
 
-    while i < left_half.len() {
-        v[k] = left_half[i];
-        i += 1;
-        k += 1;
-    }
+    let left_remaining = &left_half[left_half.len() - left_iter.count()..];
+    let right_remaining = &right_half[right_half.len() - right_iter.count()..];
 
-    while j < right_half.len() {
-        v[k] = right_half[j];
-        j += 1;
-        k += 1;
+    if !left_remaining.is_empty() {
+        let pos = v.len() - left_remaining.len();
+        v[pos..].copy_from_slice(left_remaining);
+    } else if !right_remaining.is_empty() {
+        let pos = v.len() - right_remaining.len();
+        v[pos..].copy_from_slice(right_remaining);
     }
 }
 
