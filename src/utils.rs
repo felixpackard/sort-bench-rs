@@ -19,3 +19,17 @@ pub fn assert_sorted<T: PartialOrd + Copy + std::fmt::Display>(v: &[T]) {
         prev = Some(i);
     }
 }
+
+pub fn insertion_sort<T: Ord + Copy>(v: &mut [T]) {
+    for i in 1..v.len() {
+        let mut j = i;
+        let key = v[i];
+
+        while j > 0 && key < v[j - 1] {
+            v[j] = v[j - 1];
+            j -= 1;
+        }
+
+        v[j] = key;
+    }
+}

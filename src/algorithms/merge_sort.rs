@@ -12,6 +12,11 @@ pub fn sort<T: Ord + Copy + std::fmt::Display + std::fmt::Debug>(v: &mut [T]) {
             let mid = std::cmp::min(left + width, n);
             let right = std::cmp::min(left + 2 * width, n);
 
+            if right - left < 20 {
+                crate::utils::insertion_sort(&mut v[left..right]);
+                continue;
+            }
+
             let left_slice = &v[left..mid];
             let right_slice = &v[mid..right];
 

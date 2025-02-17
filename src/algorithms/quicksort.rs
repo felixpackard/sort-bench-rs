@@ -8,8 +8,8 @@ pub fn sort<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) {
     let mut current = v;
 
     loop {
-        if current.len() < 15 {
-            insertion_sort(current);
+        if current.len() < 20 {
+            crate::utils::insertion_sort(current);
             match stack.pop() {
                 Some(slice) => current = slice,
                 None => break,
@@ -74,20 +74,6 @@ fn partition<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> usize {
         }
 
         v.swap(left as usize, right as usize);
-    }
-}
-
-fn insertion_sort<T: Ord + Copy>(v: &mut [T]) {
-    for i in 1..v.len() {
-        let mut j = i;
-        let key = v[i];
-
-        while j > 0 && key < v[j - 1] {
-            v[j] = v[j - 1];
-            j -= 1;
-        }
-
-        v[j] = key;
     }
 }
 
