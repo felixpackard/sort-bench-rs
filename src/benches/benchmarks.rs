@@ -26,6 +26,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         bench!(std, i);
         bench!(quicksort, i);
         bench!(merge_sort, i);
+        bench!(heapsort, i);
 
         if i <= 10_000 {
             bench!(insertion_sort, i);
