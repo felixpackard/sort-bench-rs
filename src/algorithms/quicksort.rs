@@ -1,4 +1,4 @@
-pub fn sort<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) {
+pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     if v.len() <= 1 {
         return;
     }
@@ -36,7 +36,7 @@ pub fn sort<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) {
     }
 }
 
-fn pivot<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> T {
+fn pivot<T: Ord + Copy>(v: &mut [T]) -> T {
     let left = 0;
     let right = v.len() - 1;
     let mid = (left + right) / 2;
@@ -53,7 +53,7 @@ fn pivot<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> T {
 }
 
 /// Hoare's partition scheme
-fn partition<T: Ord + Copy + std::fmt::Debug>(v: &mut [T]) -> usize {
+fn partition<T: Ord + Copy>(v: &mut [T]) -> usize {
     let p = pivot(v);
     let mut left: isize = -1;
     let mut right: isize = v.len() as isize;

@@ -1,4 +1,4 @@
-pub fn sort<T: Ord + Copy + std::fmt::Display + std::fmt::Debug>(v: &mut [T]) {
+pub fn sort<T: Ord + Copy>(v: &mut [T]) {
     let n = v.len();
     if n <= 1 {
         return;
@@ -29,7 +29,7 @@ pub fn sort<T: Ord + Copy + std::fmt::Display + std::fmt::Debug>(v: &mut [T]) {
     }
 }
 
-fn merge<T: Ord + Copy + std::fmt::Display>(left_half: &[T], right_half: &[T], v: &mut [T]) {
+fn merge<T: Ord + Copy>(left_half: &[T], right_half: &[T], v: &mut [T]) {
     let mut left_iter = left_half.iter().peekable();
     let mut right_iter = right_half.iter().peekable();
     let mut output = v.iter_mut();
